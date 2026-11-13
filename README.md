@@ -13,14 +13,16 @@ text, frosted glass, framed pictures that cross the seams between sections, and 
 
 Motion, all without libraries and all switched off for visitors who ask for reduced motion:
 
-- the home page opens with the brand's wordmark as a window onto the greenhouse film, then zooms through the T of
-  OTHER until the film fills the screen and the centred headline and buttons arrive (once per visit);
+- the home page opens with the brand's wordmark as a window onto the greenhouse film, graded to a warm plum dusk, then
+  zooms through the T of OTHER until the film fills the screen and the centred headline and buttons arrive (once per
+  visit);
 - the film recedes into a rounded print as you scroll on;
 - section headings condense letter by letter, text arrives from a soft blur, pictures open with a curtain;
 - a pinned spotlight reel walks through the five featured products, each opening from a slit;
 - a pinned macro of the flower opens to full bleed;
 - count-ups, a two-way marquee with a pause control, and a quick-action bar that slides up after the hero;
-- magnetic buttons with a sheen, category cards that lift and tilt while the others dim, menus that wipe open.
+- buttons that stay still while their fill deepens and a hairline mat settles around them, the same mat line the
+  framed pictures take on hover; category cards that lift while the others dim; menus that wipe open.
 
 ## What is in it
 

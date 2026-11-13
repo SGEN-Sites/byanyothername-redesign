@@ -396,14 +396,13 @@ html.typing .dash, html.gate-on .dash, html.drawer-on .dash { translate: -50% ca
    shows from the start. */
 .hdr { transition: color .45s var(--ease); }
 .hdr__brand img { transition: filter .45s var(--ease); }
-.hdr__cta { transition: color .45s var(--ease), background-color .45s var(--ease), border-color .4s var(--ease), box-shadow .6s var(--ease-out), translate .35s var(--ease-out), transform .25s var(--ease-out); }
 .hdr__menu { transition: background-color .45s var(--ease), border-color .45s var(--ease); }
 .hdr__menu-l { transition: transform .4s var(--ease-out), background-color .45s var(--ease); }
 html.js:not(.no-site)[data-page="home"] :is(.hdr:not(.is-menu):not(.is-scrolled), .hdr.on-film:not(.is-menu)) { color: var(--pearl); }
 html.js:not(.no-site)[data-page="home"] :is(.hdr:not(.is-menu):not(.is-scrolled), .hdr.on-film:not(.is-menu)) .hdr__link, html.js:not(.no-site)[data-page="home"] :is(.hdr:not(.is-menu):not(.is-scrolled), .hdr.on-film:not(.is-menu)) .hdr__link:hover { color: var(--pearl); }
 html.js:not(.no-site)[data-page="home"] :is(.hdr:not(.is-menu):not(.is-scrolled), .hdr.on-film:not(.is-menu)) .hdr__link::after { background-image: var(--brush-light); }
 html.js:not(.no-site)[data-page="home"] :is(.hdr:not(.is-menu):not(.is-scrolled), .hdr.on-film:not(.is-menu)) .hdr__brand img { filter: brightness(0) invert(.965) sepia(.04) hue-rotate(-25deg); }
-html.js:not(.no-site)[data-page="home"] :is(.hdr:not(.is-menu):not(.is-scrolled), .hdr.on-film:not(.is-menu)) .hdr__cta { --bg: var(--pearl); --fg: var(--ox); --bg-h: var(--white); --fg-h: var(--ox); }
+html.js:not(.no-site)[data-page="home"] :is(.hdr:not(.is-menu):not(.is-scrolled), .hdr.on-film:not(.is-menu)) .hdr__cta { --bg: var(--pearl); --fg: var(--ox); --bg-h: var(--white); --fg-h: var(--ox); --ring: rgba(251, 248, 246, .55); }
 html.js:not(.no-site)[data-page="home"] :is(.hdr:not(.is-menu):not(.is-scrolled), .hdr.on-film:not(.is-menu)) .hdr__menu { border-color: rgba(251, 248, 246, .42); background-color: rgba(28, 4, 12, .3); }
 html.js:not(.no-site)[data-page="home"] :is(.hdr:not(.is-menu):not(.is-scrolled), .hdr.on-film:not(.is-menu)) .hdr__menu-l { background-color: var(--pearl); }
 html.js:not(.no-site)[data-page="home"] :is(.hdr:not(.is-menu):not(.is-scrolled), .hdr.on-film:not(.is-menu)) :focus-visible { outline-color: var(--lilac); }
@@ -419,35 +418,42 @@ html.no-js[data-page="home"] .hdr::before, html.no-site[data-page="home"] .hdr::
 /* components.css */
 /* components.css - buttons, glass, frames, plates, cards, forms, chips, swipe rows. */
 
-/* buttons: magnetic (site.js moves them with the pointer), a sheen that sweeps across, an arrow that travels */
+/* buttons: a still, elegant hover (revision 4). Nothing moves the button: the fill deepens with a slow fade, a hairline
+   mat settles round the pill (the mat line the framed photographs get, with the same .8s settle) and the arrow glides.
+   No wipe, no sheen, no magnetic pull. Variants set --bg/--fg, the hover --bg-h/--fg-h/--bd-h, and the mat --ring. */
 .btn {
-  --bg: var(--ox); --fg: var(--paper); --bg-h: #5A1229; --fg-h: var(--pearl); --bd: transparent;
-  position: relative; isolation: isolate; overflow: hidden;
+  --bg: var(--ox); --fg: var(--paper); --bg-h: #5A1229; --fg-h: var(--pearl); --bd: transparent; --bd-h: var(--bd);
+  --ring: rgba(59, 7, 21, .3);
+  position: relative; isolation: isolate;
   display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 30px;
   border-radius: 999px; border: 1px solid var(--bd); background: var(--bg); color: var(--fg);
   font: 500 12.5px/1 var(--f-sans); letter-spacing: .24em; text-transform: uppercase; text-decoration: none; cursor: pointer;
-  transition: color .45s var(--ease), border-color .4s var(--ease), box-shadow .6s var(--ease-out), translate .35s var(--ease-out), transform .25s var(--ease-out);
+  transition: background-color .6s var(--ease), color .6s var(--ease), border-color .6s var(--ease), transform .25s var(--ease-out);
   -webkit-tap-highlight-color: transparent; white-space: nowrap;
 }
-.btn::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--bg-h);
-  transform: scaleX(0); transform-origin: 100% 50%; transition: transform .7s var(--ease-out);
+.btn::after {
+  content: ""; position: absolute; inset: -6px; border-radius: inherit; pointer-events: none;
+  border: 1px solid var(--ring); opacity: 0; transform: scale(1.04);
+  transition: opacity .8s var(--ease), transform .8s var(--ease-out);
 }
-@media (hover: hover) { .btn:not([disabled]):hover::before { transform: scaleX(1); transform-origin: 0 50%; } .btn:hover { color: var(--fg-h); box-shadow: 0 22px 40px -24px rgba(59, 7, 21, .55); } }
-.btn:focus-visible::before { transform: scaleX(1); transform-origin: 0 50%; }
-.btn:focus-visible { color: var(--fg-h); }
-.btn:active { transform: scale(.97); transition: transform .12s; }
-.btn .i-arrow { width: 22px; height: 12px; flex: none; transition: transform .6s var(--ease-out); }
-.btn:hover .i-arrow { transform: translateX(6px); }
+@media (hover: hover) {
+  .btn:not([disabled]):hover { background-color: var(--bg-h); color: var(--fg-h); border-color: var(--bd-h); }
+  .btn:not([disabled]):hover::after { opacity: 1; transform: none; }
+  .btn:not([disabled]):hover .i-arrow { transform: translateX(5px); }
+}
+/* keyboard focus takes the fill; the focus outline itself is the frame, so the mat stays off and the two never double */
+.btn:focus-visible { background-color: var(--bg-h); color: var(--fg-h); border-color: var(--bd-h); }
+.btn:active { transform: scale(.98); transition: transform .12s; }
+.btn .i-arrow { width: 22px; height: 12px; flex: none; transition: transform .8s var(--ease-out); }
 .btn[disabled] { cursor: not-allowed; opacity: .55; }
 .btn--sm { min-height: 44px; padding: 0 22px; font-size: 12px; letter-spacing: .2em; }
 .btn--ink { --bg: var(--ox); --fg: var(--pearl); --bg-h: #5A1229; --fg-h: var(--pearl); }
-.btn--coral { --bg: var(--coral); --fg: var(--white); --bg-h: #D9634D; --fg-h: var(--white); }
-.btn--paper { --bg: var(--pearl); --fg: var(--ox); --bg-h: var(--white); --fg-h: var(--ox); }
-.btn--line { --bg: transparent; --fg: var(--ox); --bg-h: var(--ox); --fg-h: var(--pearl); --bd: rgba(59, 7, 21, .45); }
-.btn--line-light { --fg: var(--pearl); --bg-h: var(--pearl); --fg-h: var(--plum); --bd: rgba(245, 236, 230, .5); }
+.btn--coral { --bg: var(--coral); --fg: var(--white); --bg-h: #D9634D; --fg-h: var(--white); --ring: rgba(201, 83, 61, .45); }
+.btn--paper { --bg: var(--pearl); --fg: var(--ox); --bg-h: var(--white); --fg-h: var(--ox); --ring: rgba(251, 248, 246, .55); }
+.btn--line { --bg: transparent; --fg: var(--ox); --bg-h: rgba(59, 7, 21, .05); --fg-h: var(--ox); --bd: rgba(59, 7, 21, .45); --bd-h: var(--ox); --ring: rgba(59, 7, 21, .26); }
+.btn--line-light { --fg: var(--pearl); --bg-h: rgba(251, 248, 246, .1); --fg-h: var(--pearl); --bd: rgba(245, 236, 230, .5); --bd-h: var(--pearl); --ring: rgba(245, 236, 230, .42); }
 .btn--glass {
-  --bg: rgba(255, 253, 251, .42); --fg: var(--ox); --bg-h: rgba(255, 253, 251, .78); --fg-h: var(--ox); --bd: rgba(255, 255, 255, .8);
+  --bg: rgba(255, 253, 251, .42); --fg: var(--ox); --bg-h: rgba(255, 253, 251, .78); --fg-h: var(--ox); --bd: rgba(255, 255, 255, .8); --ring: rgba(59, 7, 21, .22);
   -webkit-backdrop-filter: blur(14px) saturate(150%); backdrop-filter: blur(14px) saturate(150%);
 }
 
@@ -910,10 +916,11 @@ a:hover .ink-line, a:focus-visible .ink-line { background-position: 0 100%; back
 .hero--center .hero__ctas { justify-content: center; gap: 14px; margin-bottom: 22px; }
 .hero--center .status-chip { margin: 0 auto; }
 /* the copy fades as a whole while leaving, which would blind frosted glass inside it: no backdrop blur in the hero.
-   On the dusk film the primary turns pearl, the secondary is a pearl outline and the chip a translucent oxblood. */
+   On the dusk film the primary turns pearl, the secondary is a pearl outline and the chip a translucent oxblood.
+   Their hovers stay pearl: the primary brightens, the outline takes a faint pearl tint and a full pearl edge. */
 .hero .btn--glass, .hero .status-chip { -webkit-backdrop-filter: none; backdrop-filter: none; }
-.hero--center .hero__ctas .btn--ink { --bg: var(--pearl); --fg: var(--ox); --bg-h: var(--white); --fg-h: var(--ox); }
-.hero--center .hero__ctas .btn--glass { --bg: rgba(28, 4, 12, .22); background: rgba(28, 4, 12, .22); --fg: var(--pearl); --bd: rgba(251, 248, 246, .78); --bg-h: var(--pearl); --fg-h: var(--ox); }
+.hero--center .hero__ctas .btn--ink { --bg: var(--pearl); --fg: var(--ox); --bg-h: var(--white); --fg-h: var(--ox); --ring: rgba(251, 248, 246, .62); }
+.hero--center .hero__ctas .btn--glass { --bg: rgba(28, 4, 12, .22); --fg: var(--pearl); --bd: rgba(251, 248, 246, .78); --bg-h: rgba(251, 248, 246, .14); --fg-h: var(--pearl); --bd-h: var(--pearl); --ring: rgba(251, 248, 246, .45); }
 .hero--center .status-chip { --bg: rgba(59, 7, 21, .62); background: rgba(59, 7, 21, .62); border-color: rgba(232, 201, 210, .32); color: var(--pearl); }
 .hero--center :focus-visible { outline-color: var(--lilac); }
 
@@ -1166,7 +1173,8 @@ html.js:not(.dive-on):not(.gate-on) .hero--center .hero__in > * { animation: her
   [data-parallax] { translate: none !important; }
   .marquee__track, .ftr__word, .status-chip.is-open::before, .gate__card, .bmq__rail { animation: none !important; }
   .hero__video { display: none; }
-  .btn, .btn::before, .frame > img, .frame::after, .cat, .prod__frame, .prod__frame img { transition-duration: .2s !important; }
+  .btn, .btn::after, .frame > img, .frame::after, .cat, .prod__frame, .prod__frame img { transition-duration: .2s !important; }
+  .btn::after, .btn .i-arrow, .btn:active { transform: none !important; }
 }
 
 /* phone.css */

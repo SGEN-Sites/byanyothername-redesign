@@ -392,7 +392,7 @@
     if (row || S.reel < DOCK) { w.scrollTo({ top: target, behavior: 'instant' }); T.reel = S.reel = progressOf(reel); setReel(i); render(); }
   });
 
-  /* ---------- pointer: reel depth and light (smoothed), card glints, magnetic pull; fine pointers only ---------- */
+  /* ---------- pointer: reel depth and light (smoothed), card glints; fine pointers only ---------- */
   if (FINE && !reduce) {
     var ptr = { x: 0, y: 0, tx: 0, ty: 0, el: null, raf: 0, last: 0 };
     var card = reel && reel.querySelector('[data-reel-card]');
@@ -414,14 +414,9 @@
     d.addEventListener('pointermove', function (e) {
       var t = e.target.closest && e.target.closest('.cat');
       if (t) { var r = t.getBoundingClientRect(); t.style.setProperty('--gx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%'); t.style.setProperty('--gy', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%'); }
-      var mg = e.target.closest && e.target.closest('[data-magnetic]');
-      if (mg) { var q = mg.getBoundingClientRect(); mg.style.translate = clamp((e.clientX - q.left - q.width / 2) * .2, -10, 10).toFixed(1) + 'px ' + clamp((e.clientY - q.top - q.height / 2) * .3, -7, 7).toFixed(1) + 'px'; }
       var sp = e.target.closest && e.target.closest('[data-spot]');
       if (sp) { var sr = sp.getBoundingClientRect(); sp.style.setProperty('--sx', (e.clientX - sr.left) + 'px'); sp.style.setProperty('--sy', (e.clientY - sr.top) + 'px'); }
     }, { passive: true });
-    d.addEventListener('pointerout', function (e) {
-      var mg = e.target.closest && e.target.closest('[data-magnetic]'); if (mg && !mg.contains(e.relatedTarget)) mg.style.translate = '';
-    });
   }
 
   /* ---------- hero film: loads after the page, plays only on screen; never under reduced motion or Save-Data ---------- */
