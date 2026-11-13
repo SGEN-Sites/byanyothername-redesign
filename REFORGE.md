@@ -1,4 +1,4 @@
-# Reforge record — byanyothername-redesign
+# Reforge record: byanyothername-redesign
 
 - Source: https://byanyothernamebk.com
 - Preview: https://sgen-sites.github.io/byanyothername-redesign/
