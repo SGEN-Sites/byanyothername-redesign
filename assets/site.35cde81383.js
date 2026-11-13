@@ -7,7 +7,7 @@
   var reduce = w.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var FINE = w.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var main = d.getElementById('main');
-  root.classList.add('dive-run', 'letters-on');
+  root.classList.add('dive-run', 'letters-on'); root.classList.remove('no-site');
   function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
   function smooth(a, b, x) { x = clamp((x - a) / (b - a), 0, 1); return x * x * (3 - 2 * x); }
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
@@ -292,7 +292,11 @@
     if (reel && reel.classList.contains('is-live')) T.reel = progressOf(reel);
     if (macro && macro.classList.contains('is-live')) T.macro = progressOf(macro);
     if (dash) dash.classList.toggle('is-on', w.scrollY > (hero ? hero.offsetHeight * .55 : 520) && (d.body.scrollHeight - w.scrollY - vh) > 120);
-    if (hdr) hdr.classList.toggle('is-scrolled', w.scrollY > 12);
+    if (hdr) {
+      hdr.classList.toggle('is-scrolled', w.scrollY > 12);
+      // the dark hero film is still under the header: it stays pearl (home only)
+      if (hero) hdr.classList.toggle('on-film', w.scrollY + hdr.offsetHeight < hero.offsetTop + hero.offsetHeight);
+    }
     checkCurtains();
     if (reel && slides.length && !reel.__decoded) {   // decode the packshots ahead so a slit never opens on a blank card
       var rr = reel.getBoundingClientRect();
